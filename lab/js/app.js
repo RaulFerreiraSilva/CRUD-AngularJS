@@ -2,21 +2,16 @@ var crud = angular.module("crud", [])
 
 crud.controller("controller", function ($scope, $http) { // scope ligação da view com o controller
 
+    $scope.payload = {}
     $scope.novoContato = {} // array vazio
     $scope.contatoSelecionado = {}
     $scope.novoEndereco = {}
     $scope.enderecoContato = {}
+    $scope.contatos = []
+    $scope.idContato
+    listagemPessoa()
 
-    conexao()
 
-    $scope.contatos = [
-        {
-            nome: "Nair Olivia Castro", idade: 69, dataNascimento: "18/01/1953", email: "nair_castro@scuderiagwr.com.br", telefone: "(41) 3560-8208", celular: "(41) 98766-5203"
-        },
-        {
-            nome: "Mair Olivia Castro", idade: 19, dataNascimento: "18/01/1953", email: "nair_castro@scuderiagwr.com.br", telefone: "(41) 3560-8208", celular: "(41) 98766-5203"
-        }
-    ]
 
     $scope.enderecos = [
         {
@@ -27,7 +22,7 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
         }
     ]
 
-    function conexao() {
+    function listagemPessoa() {
         $http({
             url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/GetAll`,
             method: 'GET',
@@ -36,42 +31,24 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
             }
         }).then(function successCallback(response) {
 
-            console.log(response)
+            $scope.contatos = response.data.data
+            console.log($scope.contatos)
 
         }, function errorCallback(err) {
             console.error(err);
         })
     }
-
-    $scope.contatos = $scope.List = function () {
-        $http({
-            url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/GetAll`,
-            method: 'GET',
-            headers: {
-                Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
-            }
-        }).then(function successCallback(response) {
-
-            console.log(response)
-
-        }, function errorCallback(err) {
-            console.error(err);
-        })
-    }
-
 
     $scope.save = function () {
-        var payload = novoContato
-
         $http({
             url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas`,
             method: 'POST',
-            data: payload,
+            data: $scope.payload,
             headers: {
                 Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
             }
         }).then(function successCallback(response) {
-
+            listagemPessoa()
             console.log(response)
 
         }, function errorCallback(err) {
@@ -91,34 +68,55 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
     }
 
     $scope.selecionaContato = function (contato) {
-        $scope.contatoSelecionado = contato
-
         $http({
-            url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/{pessoaId}`,
+            url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/${contato.pessoaId}`,
+            method: 'GET',
+            headers: {
+                Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
+            }
+        }).then(function successCallback(response) {
+            $scope.contatoSelecionado = response.data.data
+            $scope.idContato = contato.pessoaId
+            console.log(response.data.data)
+
+        }, function errorCallback(err) {
+            console.log(contato.pessoaId)
+            console.error(err);
+        })
+    }
+
+    $scope.alteraContato = function () {
+        console.log($scope.idContato)
+        $http({
+            url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/${$scope.idContato}`,
             method: 'PUT',
-            data: contatoSelecionado,
+            data: $scope.contatoSelecionado,
             headers: {
                 Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
             }
         }).then(function successCallback(response) {
-
-            console.log(response)
+    
+            $scope.contatos = response.data.data
+            listagemPessoa()
+            console.log(response.data.data)
 
         }, function errorCallback(err) {
             console.error(err);
+            console.log($scope.contatoSelecionado)
         })
     }
 
-    $scope.delete = function () {
+    $scope.deletaContato = function () {
         $http({
-            url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/{pessoaId}`,
+            url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/${$scope.idContato}`,
             method: 'DELETE',
-            data: contatoSelecionado,
             headers: {
                 Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
             }
         }).then(function successCallback(response) {
-
+            
+            $scope.contatoSelecionado = response.data.data
+            listagemPessoa()
             console.log(response)
 
         }, function errorCallback(err) {
@@ -126,7 +124,7 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
         })
     }
 
-    $scope.deletaContato = function () { // metodo aplice alterar ou excluir algo de um array
+    $scope.deletaContatos = function () { // metodo aplice alterar ou excluir algo de um array
         $scope.contatos.splice($scope.contatos.indexOf($scope.contatoSelecionado), 1)
         $scope.enderecos.splice($scope.enderecos.indexOf($scope.contatoSelecionado), 1)
 

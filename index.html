@@ -32,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="contato in contatos | orderBy:criterioDeOrdenacao:direcao">
+                <tr ng-repeat="contato in contatos">
                     <td>{{contato.nome}}</td>
                     <td>{{contato.idade}}</td>
                     <td>{{contato.dataNascimento | date: 'dd/MM/yyyy'}}</td>
@@ -42,7 +42,7 @@
                     <td>
                         <div>
                             <button type="button" class="btn btn-warning glyphicon glyphicon-edit" data-toggle="modal"
-                                data-target="#modalEditar" ng-click="selecionaContato(contato)"></button>
+                                data-target="#modalEditar"  ng-click="selecionaContato(contato)"></button>
                             <button type="button" class="btn btn-danger glyphicon glyphicon-trash" data-toggle="modal"
                                 data-target="#modalDeletar" ng-click="selecionaContato(contato)"></button>
                         </div>
@@ -62,29 +62,29 @@
                     <div class="form-group">
                         <label class="control-label col-sm-1" for="nome">Nome</label>
                         <input class="col-md-3 col-lg-offset-2" type="text" id="nome" ng-required="true" ng-minlength="4"
-                            placeholder="Digite seu nome: " ng-model="novoContato.nome" required>
+                            placeholder="Digite seu nome: " ng-model="payload.nome" required>
 
                         <label class="control-label col-sm-1 arrumandoIdade" for="idade">Idade</label>
-                        <input class="col-md-3 col-lg-offset-1" type="text" id="idade" ng-required="true" ng-pattern="/^\d{2,3}$/"
-                            placeholder="Digite sua idade: " ng-model="novoContato.idade" required>
+                        <input class="col-md-3 col-lg-offset-1" type="number" id="idade" ng-required="true" ng-pattern="/^\d{2,3}$/"
+                            placeholder="Digite sua idade: " ng-model="payload.idade" required>
 
                         <label class="control-label col-sm-1" for="email">Email</label>
                         <input class="col-md-3 col-lg-offset-2" type="email" ng-required="true" id="email"
-                            placeholder="Digite seu email: " ng-model="novoContato.email" required>
+                            placeholder="Digite seu email: " ng-model="payload.email" required>
 
                         <label class="control-label col-sm-1 dataNasc" ng-required="true" for="dataNasc">Data
                             Nascimento</label>
                         <input class="col-md-3 col-lg-offset-0 " type="date" id="dataNasc"
-                            ng-model="novoContato.dataNascimento" required>
+                            ng-model="payload.dataNascimento" required>
 
                         <label class="control-label col-sm-1" for="telefone">Telefone</label>
                         <input class="col-md-3 col-lg-offset-2" type="text" id="telefone" ng-pattern="/(\(d{2}\)\s)?(\d{4,5}-\d{4})/"
                             placeholder="Digite seu telefone: (caso nao tenha deixe em branco)"
-                            ng-model="novoContato.telefone">
+                            ng-model="payload.telefone">
 
                         <label class="control-label col-sm-1 arrumandoContato" for="celular">Celular</label>
                         <input class="col-md-3 col-lg-offset-1" type="text" id="celular" ng-required="true" ng-pattern="/(\(d{2}\)\s)?(\d{4,5}-\d{4})/"
-                            placeholder="Digite seu celular: " ng-model="novoContato.celular">
+                            placeholder="Digite seu celular: " ng-model="payload.celular">
                     </div>
                 </form>
                 <div class="modal-header">
@@ -140,7 +140,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="save()"
+                <button type="button" class="btn btn-primary" ng-click="save()" 
                     ng-disabled="contatoForm.$invalid" data-dismiss="modal">Save</button>
             </div>
         </div>
@@ -232,7 +232,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-disabled="editContatoForm.$invalid" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-primary" ng-disabled="editContatoForm.$invalid" data-dismiss="modal" ng-click="alteraContato(contato)">Save</button>
             </div>
         </div>
     </div>
@@ -254,7 +254,7 @@
 
 <!-- Modoulos do Boostrap 3 -->
 
-<script src="../node_modules/bootstrap3/dist/js/bootstrap.js"></script>
+<script src="node_modules/bootstrap3/dist/js/bootstrap.js"></script>
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
@@ -268,7 +268,7 @@
 <script src="lab/js/mascaraCampo.js"></script>
 
 <!-- Modulos do Angular -->
-<script src="./node_modules/angular/angular.js"></script>
-<script src="./lab/js/app.js"></script>
+<script src="node_modules/angular/angular.js"></script>
+<script src="lab/js/app.js"></script>
 
 </html>
