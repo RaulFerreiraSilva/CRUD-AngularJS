@@ -2,25 +2,21 @@ var crud = angular.module("crud", [])
 
 crud.controller("controller", function ($scope, $http) { // scope ligação da view com o controller
 
-    $scope.payload = {}
-    $scope.novoContato = {} // array vazio
+    $scope.payload = {}// array vazio
     $scope.contatoSelecionado = {}
+
     $scope.novoEndereco = {}
-    $scope.enderecoContato = {}
+    $scope.enderecoSelecionado = {}
+    
     $scope.contatos = []
+    $scope.enderecos = []
+
     $scope.idContato
     listagemPessoa()
 
 
 
-    $scope.enderecos = [
-        {
-            logradouro: "Rua Alterosa", numero: 817, bairro: "Bairro Alto", cidadeUF: "Curitiba-PR"
-        },
-        {
-            logradouro: "Rua Professor Oliverios Vilaça", numero: 456, bairro: "Cidade Industrial", cidadeUF: "Curitiba-PR"
-        }
-    ]
+    
 
     function listagemPessoa() {
         $http({
@@ -32,6 +28,23 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
         }).then(function successCallback(response) {
 
             $scope.contatos = response.data.data
+            console.log($scope.contatos)
+
+        }, function errorCallback(err) {
+            console.error(err);
+        })
+    }
+
+    function listagemEndereco() {
+        $http({
+            url: `https://www.selida.com.br/avaliacaotecnica/api/Endereco/GetAll/${idContato}`,
+            method: 'GET',
+            headers: {
+                Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
+            }
+        }).then(function successCallback(response) {
+
+            $scope.enderecos = response.data.data
             console.log($scope.contatos)
 
         }, function errorCallback(err) {
@@ -56,15 +69,21 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
         })
     }
 
+    $scope.saveEndereco = function () {
+        $http({
+            url: `https://www.selida.com.br/avaliacaotecnica/api/Endereco`,
+            method: 'POST',
+            data: $scope.novoEndereco,
+            headers: {
+                Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
+            }
+        }).then(function successCallback(response) {
+            listagemPessoa()
+            console.log(response)
 
-    $scope.inserirContato = function () { // jogando as info dentro do array
-        $scope.contatos.push($scope.novoContato)
-        $scope.novoContato = {};//limpa o array
-    }
-
-    $scope.inserirEndereco = function () { // jogando as info dentro do array
-        $scope.enderecos.push($scope.novoEndereco)
-        $scope.novoEndereco = {};//limpa o array
+        }, function errorCallback(err) {
+            console.error(err);
+        })
     }
 
     $scope.selecionaContato = function (contato) {
@@ -81,6 +100,24 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
 
         }, function errorCallback(err) {
             console.log(contato.pessoaId)
+            console.error(err);
+        })
+    }
+
+    $scope.selecionaEndereco = function (endereco) {
+        $http({
+            url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/${endereco.enderecoId}`,
+            method: 'GET',
+            headers: {
+                Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
+            }
+        }).then(function successCallback(response) {
+            $scope.enderecoSelecionado = response.data.data
+            $scope.idEndereco = endereco.enderecoId
+            console.log(response.data.data)
+
+        }, function errorCallback(err) {
+            console.log(endereco.enderecoId)
             console.error(err);
         })
     }
@@ -106,6 +143,27 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
         })
     }
 
+    $scope.alteraEndereco = function () {
+        console.log($scope.idEndereco)
+        $http({
+            url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/${$scope.idEndereco}`,
+            method: 'PUT',
+            data: $scope.enderecoSelecionado,
+            headers: {
+                Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
+            }
+        }).then(function successCallback(response) {
+    
+            $scope.enderecos = response.data.data
+            listagemEndereco()
+            console.log(response.data.data)
+
+        }, function errorCallback(err) {
+            console.error(err);
+            console.log($scope.enderecoSelecionado)
+        })
+    }
+
     $scope.deletaContato = function () {
         $http({
             url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/${$scope.idContato}`,
@@ -122,6 +180,34 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
         }, function errorCallback(err) {
             console.error(err);
         })
+    }
+
+    $scope.deletaEndereco = function () {
+        $http({
+            url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/${$scope.idEndereco}`,
+            method: 'DELETE',
+            headers: {
+                Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
+            }
+        }).then(function successCallback(response) {
+            
+            $scope.enderecoSelecion = response.data.data
+            listagemEndereco()
+            console.log(response)
+
+        }, function errorCallback(err) {
+            console.error(err);
+        })
+    }
+
+    $scope.inserirContato = function () { // jogando as info dentro do array
+        $scope.contatos.push($scope.novoContato)
+        $scope.novoContato = {};//limpa o array
+    }
+
+    $scope.inserirEndereco = function () { // jogando as info dentro do array
+        $scope.enderecos.push($scope.novoEndereco)
+        $scope.novoEndereco = {};//limpa o array
     }
 
     $scope.deletaContatos = function () { // metodo aplice alterar ou excluir algo de um array
