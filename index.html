@@ -42,7 +42,7 @@
                     <td>
                         <div>
                             <button type="button" class="btn btn-warning glyphicon glyphicon-edit" data-toggle="modal"
-                                data-target="#modalEditar"  ng-click="selecionaContato(contato)"></button>
+                                data-target="#modalEditar" ng-click="selecionaContato(contato)"></button>
                             <button type="button" class="btn btn-danger glyphicon glyphicon-trash" data-toggle="modal"
                                 data-target="#modalDeletar" ng-click="selecionaContato(contato)"></button>
                         </div>
@@ -61,12 +61,12 @@
                 <form class="form-horizontal" role="form" name="contatoForm">
                     <div class="form-group">
                         <label class="control-label col-sm-1" for="nome">Nome</label>
-                        <input class="col-md-3 col-lg-offset-2" type="text" id="nome" ng-required="true" ng-minlength="4"
-                            placeholder="Digite seu nome: " ng-model="payload.nome" required>
+                        <input class="col-md-3 col-lg-offset-2" type="text" id="nome" ng-required="true"
+                            ng-minlength="4" placeholder="Digite seu nome: " ng-model="payload.nome" required>
 
                         <label class="control-label col-sm-1 arrumandoIdade" for="idade">Idade</label>
-                        <input class="col-md-3 col-lg-offset-1" type="number" id="idade" ng-required="true" ng-pattern="/^\d{2,3}$/"
-                            placeholder="Digite sua idade: " ng-model="payload.idade" required>
+                        <input class="col-md-3 col-lg-offset-1" type="number" id="idade" ng-required="true"
+                            ng-pattern="/^\d{2,3}$/" placeholder="Digite sua idade: " ng-model="payload.idade" required>
 
                         <label class="control-label col-sm-1" for="email">Email</label>
                         <input class="col-md-3 col-lg-offset-2" type="email" ng-required="true" id="email"
@@ -78,13 +78,15 @@
                             ng-model="payload.dataNascimento" required>
 
                         <label class="control-label col-sm-1" for="telefone">Telefone</label>
-                        <input class="col-md-3 col-lg-offset-2" type="text" id="telefone" ng-pattern="/(\(d{2}\)\s)?(\d{4,5}-\d{4})/"
+                        <input class="col-md-3 col-lg-offset-2" type="text" id="telefone"
+                            ng-pattern="/(\(d{2}\)\s)?(\d{4,5}-\d{4})/"
                             placeholder="Digite seu telefone: (caso nao tenha deixe em branco)"
                             ng-model="payload.telefone">
 
                         <label class="control-label col-sm-1 arrumandoContato" for="celular">Celular</label>
-                        <input class="col-md-3 col-lg-offset-1" type="text" id="celular" ng-required="true" ng-pattern="/(\(d{2}\)\s)?(\d{4,5}-\d{4})/"
-                            placeholder="Digite seu celular: " ng-model="payload.celular">
+                        <input class="col-md-3 col-lg-offset-1" type="text" id="celular" ng-required="true"
+                            ng-pattern="/(\(d{2}\)\s)?(\d{4,5}-\d{4})/" placeholder="Digite seu celular: "
+                            ng-model="payload.celular">
                     </div>
                 </form>
                 <div class="modal-header">
@@ -97,42 +99,47 @@
                             <input class="col-md-3 col-lg-offset-2" type="text" id="logradouro"
                                 ng-model="novoEndereco.logradouro">
 
-                            <label class="control-label col-sm-1 arrumandoIdade" for="bairro">Numero</label>
-                            <input class="col-md-3 col-lg-offset-1" type="text" id="numero">
+                            <label class="control-label col-sm-1 arrumandoIdade" for="numero">Numero</label>
+                            <input class="col-md-3 col-lg-offset-1" type="text" id="numero"
+                                ng-model="novoEndereco.numero">
 
                             <label class="control-label col-sm-1" for="bairro">Bairro</label>
-                            <input class="col-md-3 col-lg-offset-2" type="text" id="bairro">
+                            <input class="col-md-3 col-lg-offset-2" type="text" id="bairro"
+                                ng-model="novoEndereco.bairro">
 
                             <label class="control-label col-sm-1 dataNasc" for="cidade">Cidade</label>
-                            <input class="col-md-3 col-lg-offset-0 " type="text" id="cidade">
+                            <input class="col-md-3 col-lg-offset-0 " type="text" id="cidade"
+                                ng-model="novoEndereco.cidade">
 
                             <label class="control-label col-sm-1" for="uf">UF</label>
-                            <input class="col-md-3 col-lg-offset-2" type="text" id="uf">
+                            <input class="col-md-3 col-lg-offset-2" type="text" id="uf" ng-model="novoEndereco.uf">
 
-                            <label class="control-label col-sm-1 arrumandoContato" for="ceo">CEP</label>
-                            <input class="col-md-3 col-lg-offset-1" type="text" id="cep">
                         </div>
                         <button type="button" class="btn btn-primary btn-save"
                             ng-click="inserirEndereco()">Adicionar</button>
                     </form>
                     <table class="table">
+                        <h1 class="list-endereco">Endereços</h1>
                         <thead>
-                            <tr>
-                                <th>Endereço</th>
-                            </tr>
                             <tr>
                                 <th>Logradouro</th>
                                 <th>Numero</th>
                                 <th>Bairro</th>
-                                <th>Cidade-UF</th>
+                                <th>Cidade/UF</th>
+                                <th>Apagar</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="endereco in enderecos">
                                 <td>{{endereco.logradouro}}</td>
-                                <td>{{enderecoContato.numero}}</td>
-                                <td>{{enderecoContato.bairro}}</td>
-                                <td>{{enderecoContato.cidadeUF}}</td>
+                                <td>{{endereco.numero}}</td>
+                                <td>{{endereco.bairro}}</td>
+                                <td>{{endereco.cidade +'-'+ endereco.uf | uppercase}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger glyphicon glyphicon-trash lixo"
+                                        data-toggle="modal" data-target="#modalDeletarEndereco"
+                                        ng-click="selecionaEndereco (endereco)"></button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -140,8 +147,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="save()" 
-                    ng-disabled="contatoForm.$invalid" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-primary" ng-click="save()" ng-disabled="contatoForm.$invalid"
+                    data-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
@@ -155,16 +162,16 @@
                 <form class="form-horizontal" role="form" name="editContatoForm">
                     <div class="form-group">
                         <label class="control-label col-sm-1" for="nome">Nome</label>
-                        <input class="col-md-3 col-lg-offset-2" type="text" id="nome" ng-required="true" ng-minlength="4" placeholder="Digite seu nome: "
-                            ng-model="contatoSelecionado.nome">
+                        <input class="col-md-3 col-lg-offset-2" type="text" id="nome" ng-required="true"
+                            ng-minlength="4" placeholder="Digite seu nome: " ng-model="contatoSelecionado.nome">
 
                         <label class="control-label col-sm-1 arrumandoIdade" for="idade">Idade</label>
-                        <input class="col-md-3 col-lg-offset-1" type="text" id="idade" ng-required="true" placeholder="Digite sua idade: "
-                            ng-model="contatoSelecionado.idade">
+                        <input class="col-md-3 col-lg-offset-1" type="text" id="idade" ng-required="true"
+                            placeholder="Digite sua idade: " ng-model="contatoSelecionado.idade">
 
                         <label class="control-label col-sm-1" for="email">Email</label>
-                        <input class="col-md-3 col-lg-offset-2" type="email" id="email" ng-required="true" placeholder="Digite seu email: "
-                            ng-model="contatoSelecionado.email">
+                        <input class="col-md-3 col-lg-offset-2" type="email" id="email" ng-required="true"
+                            placeholder="Digite seu email: " ng-model="contatoSelecionado.email">
 
                         <label class="control-label col-sm-1 dataNasc" for="dataNasc">Data Nascimento</label>
                         <input class="col-md-3 col-lg-offset-0 " type="date" id="dataNasc" ng-required="true"
@@ -221,10 +228,10 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="endereco in enderecos">
-                                <td>{{endereco.logradouro}}</td>
-                                <td>{{endereco.numero}}</td>
-                                <td>{{endereco.bairro}}</td>
-                                <td>{{endereco.cidadeUF}}</td>
+                                <td>{{enderecoSelecionado.logradouro}}</td>
+                                <td>{{enderecoSelecionado.numero}}</td>
+                                <td>{{enderecoSelecionado.bairro}}</td>
+                                <td>{{enderecoSelecionado.cidade + "-" + enderecoSelecionado.uf | uppercase}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -232,7 +239,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-disabled="editContatoForm.$invalid" data-dismiss="modal" ng-click="alteraContato(contato)">Save</button>
+                <button type="button" class="btn btn-primary" ng-disabled="editContatoForm.$invalid"
+                    data-dismiss="modal" ng-click="alteraContato(contato)">Save</button>
             </div>
         </div>
     </div>
@@ -250,11 +258,24 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalDeletarEndereco" role="dialog">
+        <div class="modal-content meuModal">
+            <div class="modal-header">
+                <h1 class="modal-title">Deseja deletar este contato: {{enderecoSelecionado.logradouro | enderecoSelecionado.numero}?</h1>
+            </div>
+            <div class="modal-body btn-delete">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    ng-click="deletaEnderecoArray()">Deletar</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 <!-- Modoulos do Boostrap 3 -->
 
-<script src="node_modules/bootstrap3/dist/js/bootstrap.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"

@@ -114,3 +114,8 @@ a:hover{
     text-decoration: none;
     cursor: pointer;
 }
+
+.lixo{
+    position: relative;
+    left: 9%;
+}

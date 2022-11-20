@@ -6,17 +6,17 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
     $scope.contatoSelecionado = {}
 
     $scope.novoEndereco = {}
+    $scope.enderecos = []
     $scope.enderecoSelecionado = {}
     
     $scope.contatos = []
     $scope.enderecos = []
 
     $scope.idContato
+    $scope.idEndereco
+    
     listagemPessoa()
 
-
-
-    
 
     function listagemPessoa() {
         $http({
@@ -37,7 +37,7 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
 
     function listagemEndereco() {
         $http({
-            url: `https://www.selida.com.br/avaliacaotecnica/api/Endereco/GetAll/${idContato}`,
+            url: `https://www.selida.com.br/avaliacaotecnica/api/Endereco/GetAll/${$scope.idContato}`,
             method: 'GET',
             headers: {
                 Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
@@ -61,6 +61,7 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
                 Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
             }
         }).then(function successCallback(response) {
+            saveEndereco()
             listagemPessoa()
             console.log(response)
 
@@ -70,6 +71,7 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
     }
 
     $scope.saveEndereco = function () {
+        $scope.novoEndereco.pessoaId = $scope.payload.pessoaId;
         $http({
             url: `https://www.selida.com.br/avaliacaotecnica/api/Endereco`,
             method: 'POST',
@@ -78,12 +80,19 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
                 Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
             }
         }).then(function successCallback(response) {
-            listagemPessoa()
+            enderecos = []
             console.log(response)
 
         }, function errorCallback(err) {
+            console.log($scope.novoEndereco)
             console.error(err);
         })
+    }
+
+    $scope.inserirEndereco = function () { // jogando as info dentro do array
+        $scope.enderecos.push($scope.novoEndereco)
+        $scope.novoEndereco = {}
+        console.log($scope.enderecos)
     }
 
     $scope.selecionaContato = function (contato) {
@@ -104,7 +113,11 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
         })
     }
 
-    $scope.selecionaEndereco = function (endereco) {
+    $scope.selecionaEnderecoArray = function(){
+
+    }
+
+    $scope.selecionaEnderecoBanco = function (endereco) {
         $http({
             url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/${endereco.enderecoId}`,
             method: 'GET',
@@ -163,6 +176,11 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
             console.log($scope.enderecoSelecionado)
         })
     }
+    
+    $scope.deletaEnderecoArray = function () { // metodo aplice alterar ou excluir algo de um array
+        $scope.enderecos.splice($scope.enderecos.indexOf($scope.enderecoSelecionado), 1)
+        // sintax do splice(pego o array de contato.pego o index do contato selecionado e informa quantos ira excluir apartir dele)
+    }
 
     $scope.deletaContato = function () {
         $http({
@@ -182,7 +200,7 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
         })
     }
 
-    $scope.deletaEndereco = function () {
+    $scope.deletaEnderecoBanco = function () {
         $http({
             url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/${$scope.idEndereco}`,
             method: 'DELETE',
@@ -200,22 +218,7 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
         })
     }
 
-    $scope.inserirContato = function () { // jogando as info dentro do array
-        $scope.contatos.push($scope.novoContato)
-        $scope.novoContato = {};//limpa o array
-    }
-
-    $scope.inserirEndereco = function () { // jogando as info dentro do array
-        $scope.enderecos.push($scope.novoEndereco)
-        $scope.novoEndereco = {};//limpa o array
-    }
-
-    $scope.deletaContatos = function () { // metodo aplice alterar ou excluir algo de um array
-        $scope.contatos.splice($scope.contatos.indexOf($scope.contatoSelecionado), 1)
-        $scope.enderecos.splice($scope.enderecos.indexOf($scope.contatoSelecionado), 1)
-
-        // sintax do splice(pego o array de contato.pego o index do contato selecionado e informa quantos ira excluir apartir dele)
-    }
+   
 
     $scope.ordenarPor = function (campo) {
         $scope.criterioDeOrdenacao = campo
