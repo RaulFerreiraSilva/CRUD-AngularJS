@@ -10,7 +10,6 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
 
     $scope.contatos = []
     $scope.enderecos = []
-    $scope.enderecosNovo = []
 
     $scope.idContato
     $scope.idEndereco
@@ -71,8 +70,8 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
     }
 
     $scope.saveEndereco = function (idContato) {
-        for (i = 0; i < $scope.enderecosNovo.length; i++) {
-            $scope.enderecosNovo[i].pessoaId = idContato
+        for (i = 0; i < $scope.enderecos.length; i++) {
+            $scope.enderecos[i].pessoaId = idContato
             $http({
                 url: `https://www.selida.com.br/avaliacaotecnica/api/Endereco`,
                 method: 'POST',
@@ -81,7 +80,7 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
                     Chave: "D3ACDDF7-7CD7-4CA0-B65B-3EEE92396801"
                 }
             }).then(function successCallback(response) {
-                enderecosNovo = []
+                enderecos = []
                 console.log(response)
 
             }, function errorCallback(err) {
@@ -92,7 +91,7 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
     }
 
     $scope.inserirEndereco = function () { // jogando as info dentro do array
-        $scope.enderecosNovo.push($scope.novoEndereco)
+        $scope.enderecos.push($scope.novoEndereco)
         $scope.novoEndereco = {}
         console.log($scope.enderecos)
     }
@@ -133,11 +132,6 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
             console.error(err);
         })
     }
-
-    $scope.selecionaEnderecoArray = function (endereco){
-        $scope.novoEndereco = endereco
-    }
-
 
     $scope.alteraContato = function () {
         console.log($scope.idContato)
@@ -212,12 +206,13 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
             console.log(response)
 
         }, function errorCallback(err) {
+            $scope.deletaEnderecoArray()
             console.error(err);
         })
     }
 
     $scope.deletaEnderecoArray = function() {
-        $scope.enderecosNovo.splice($scope.enderecosNovo.indexOf($scope.enderecoSelecionado), 1)
+        $scope.enderecos.splice($scope.enderecos.indexOf($scope.enderecoSelecionado), 1)
         $scope.novoEndereco = {}
     }
 

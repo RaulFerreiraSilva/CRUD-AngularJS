@@ -16,7 +16,7 @@
     <div class="container">
         <div class="alinhamento">
             <h1>Listagem</h1>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalContato">Criar Nova
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalContato" ng-click="enderecos=[]">Criar Nova
                 Pessoa</button>
         </div>
         <table class="table">
@@ -94,30 +94,30 @@
                     <h1 class="modal-title">Endereço</h1>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" role="form">
+                    <form class="form-horizontal" role="form" name="enderecoForm">
                         <div class="form-group">
                             <label class="control-label col-sm-1" for="logradouro">Logradouro</label>
-                            <input class="col-md-3 col-lg-offset-2" type="text" id="logradouro"
+                            <input class="col-md-3 col-lg-offset-2" type="text" id="logradouro" ng-required="true"
                                 ng-model="novoEndereco.logradouro">
 
                             <label class="control-label col-sm-1 arrumandoIdade" for="numero">Numero</label>
-                            <input class="col-md-3 col-lg-offset-1" type="text" id="numero"
+                            <input class="col-md-3 col-lg-offset-1" type="text" id="numero" ng-required="true"
                                 ng-model="novoEndereco.numero">
 
                             <label class="control-label col-sm-1" for="bairro">Bairro</label>
-                            <input class="col-md-3 col-lg-offset-2" type="text" id="bairro"
+                            <input class="col-md-3 col-lg-offset-2" type="text" id="bairro" ng-required="true"
                                 ng-model="novoEndereco.bairro">
 
                             <label class="control-label col-sm-1 dataNasc" for="cidade">Cidade</label>
-                            <input class="col-md-3 col-lg-offset-0 " type="text" id="cidade"
+                            <input class="col-md-3 col-lg-offset-0 " type="text" id="cidade" ng-required="true"
                                 ng-model="novoEndereco.cidade">
 
                             <label class="control-label col-sm-1" for="uf">UF</label>
-                            <input class="col-md-3 col-lg-offset-2" type="text" id="uf" ng-model="novoEndereco.uf">
+                            <input class="col-md-3 col-lg-offset-2" type="text" id="uf" ng-required="true" ng-model="novoEndereco.uf">
 
                         </div>
-                        <button type="button" class="btn btn-primary btn-save"
-                            ng-click="inserirEndereco()">Adicionar</button>
+                        <button type="button" class="btn btn-primary btn-save" name="addEndereco"
+                            ng-click="inserirEndereco()" ng-disabled="enderecoForm.$invalid || enderecoForm.$pristine">Adicionar</button>
                     </form>
                     <table class="table">
                         <h1 class="list-endereco">Endereços</h1>
@@ -127,22 +127,18 @@
                                 <th>Numero</th>
                                 <th>Bairro</th>
                                 <th>Cidade/UF</th>
-                                <th>Opções</th>
+                                <th>Excluir</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="endereco in enderecosNovo">
+                            <tr ng-repeat="endereco in enderecos">
                                 <td>{{endereco.logradouro}}</td>
                                 <td>{{endereco.numero}}</td>
                                 <td>{{endereco.bairro}}</td>
                                 <td>{{endereco.cidade +'-'+ endereco.uf | uppercase}}</td>
                                 <td>
-                                    <div>
-                                        <button type="button" class="btn btn-warning glyphicon glyphicon-edit"
-                                            ng-click="selecionaEnderecoArray(endereco)"></button>
-                                        <button type="button" class="btn btn-danger glyphicon glyphicon-trash"
-                                            ng-click="deletaEnderecoArray(selecionaEnderecoArray(endereco))"></button>
-                                    </div>
+                                    <button type="button" class="btn btn-danger glyphicon glyphicon-trash lixo"
+                                        ng-click="deletaEnderecoArray(selecionaEnderecoArray(endereco))"></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -151,7 +147,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-disabled="contatoForm.$invalids" data-dismiss="modal"
+                <button type="button" class="btn btn-primary" ng-disabled="contatoForm.$invalid" data-dismiss="modal"
                     ng-click="save()">Save</button>
             </div>
         </div>
@@ -199,26 +195,26 @@
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
                             <label class="control-label col-sm-1" for="logradouro">Logradouro</label>
-                            <input class="col-md-3 col-lg-offset-2" type="text" id="logradouro"
+                            <input class="col-md-3 col-lg-offset-2" type="text" id="logradouro"  ng-required="true"
                                 ng-model="novoEndereco.logradouro">
 
                             <label class="control-label col-sm-1 arrumandoIdade" for="numero">Numero</label>
-                            <input class="col-md-3 col-lg-offset-1" type="text" id="numero"
+                            <input class="col-md-3 col-lg-offset-1" type="text" id="numero"  ng-required="true"
                                 ng-model="novoEndereco.numero">
 
                             <label class="control-label col-sm-1" for="bairro">Bairro</label>
-                            <input class="col-md-3 col-lg-offset-2" type="text" id="bairro"
+                            <input class="col-md-3 col-lg-offset-2" type="text" id="bairro"  ng-required="true"
                                 ng-model="novoEndereco.bairro">
 
                             <label class="control-label col-sm-1 dataNasc" for="cidade">Cidade</label>
-                            <input class="col-md-3 col-lg-offset-0 " type="text" id="cidade"
+                            <input class="col-md-3 col-lg-offset-0 " type="text" id="cidade"  ng-required="true"
                                 ng-model="novoEndereco.cidade">
 
                             <label class="control-label col-sm-1" for="uf">UF</label>
-                            <input class="col-md-3 col-lg-offset-2" type="text" id="uf" ng-model="novoEndereco.uf">
+                            <input class="col-md-3 col-lg-offset-2" type="text" id="uf"  ng-required="true" ng-model="novoEndereco.uf">
 
                         </div>
-                        <button type="button" class="btn btn-primary btn-save"
+                        <button type="button" class="btn btn-primary btn-save" ng-disabled="enderecoForm.$invalid || enderecoForm.$pristine"
                             ng-click="inserirEndereco()">Adicionar</button>
                     </form>
                     <table class="table">
@@ -240,9 +236,7 @@
                                 <td>{{endereco.cidade +'-'+ endereco.uf | uppercase}}</td>
                                 <td>
                                     <div>
-                                        <button type="button" class="btn btn-warning glyphicon glyphicon-edit"
-                                            ng-click="selecionaEndereco(endereco)"></button>
-                                        <button type="button" class="btn btn-danger glyphicon glyphicon-trash"
+                                        <button type="button" class="btn btn-danger glyphicon glyphicon-trash lixo"
                                             data-toggle="modal" data-target="#modalDeletarEndereco"
                                             ng-click="selecionaEndereco(endereco)"></button>
                                     </div>
@@ -276,13 +270,13 @@
     <div class="modal fade" id="modalDeletarEndereco" role="dialog">
         <div class="modal-content meuModal">
             <div class="modal-header">
-                <h1 class="modal-title">Deseja deletar este Endereço: {{enderecoSelecionado.logradouro +" "+
+                <h1 class="modal-title">Deseja deletar este Endereço:{{" "+enderecoSelecionado.logradouro +" "+
                     enderecoSelecionado.numero}}?</h1>
             </div>
             <div class="modal-body btn-delete">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
-                    ng-click="deletaEndereco()">Deletar</button>
+                    ng-click="deletaEndereco(deletaEnderecoArray)">Deletar</button>
             </div>
         </div>
     </div>
