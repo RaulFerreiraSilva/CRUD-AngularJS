@@ -117,7 +117,7 @@
 
                         </div>
                         <button type="button" class="btn btn-primary btn-save" name="addEndereco"
-                            ng-click="inserirEndereco()" ng-disabled="enderecoForm.$invalid || enderecoForm.$pristine">Adicionar</button>
+                            ng-click="inserirEndereco()" ng-disabled="enderecoForm.$invalid">Adicionar</button>
                     </form>
                     <table class="table">
                         <h1 class="list-endereco">Endereços</h1>
@@ -214,7 +214,7 @@
                             <input class="col-md-3 col-lg-offset-2" type="text" id="uf"  ng-required="true" ng-model="novoEndereco.uf">
 
                         </div>
-                        <button type="button" class="btn btn-primary btn-save" ng-disabled="enderecoForm.$invalid || enderecoForm.$pristine"
+                        <button type="button" class="btn btn-primary btn-save" ng-disabled="enderecoForm.$invalid"
                             ng-click="inserirEndereco()">Adicionar</button>
                     </form>
                     <table class="table">
