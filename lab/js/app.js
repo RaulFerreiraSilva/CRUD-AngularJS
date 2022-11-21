@@ -71,6 +71,8 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
 
     $scope.saveEndereco = function (idContato) {
         for (i = 0; i < $scope.enderecos.length; i++) {
+            if($scope.enderecos[i].enderecoId)
+                continue;
             $scope.enderecos[i].pessoaId = idContato
             $http({
                 url: `https://www.selida.com.br/avaliacaotecnica/api/Endereco`,
@@ -115,7 +117,7 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
         })
     }
 
-    $scope.selecionaEndereco = function (endereco) {
+    $scope.selecionaEndereco = function (endereco) { 
         $http({
             url: `https://www.selida.com.br/avaliacaotecnica/api/Endereco/${endereco.enderecoId}`,
             method: 'GET',
@@ -135,6 +137,7 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
 
     $scope.alteraContato = function () {
         console.log($scope.idContato)
+        console.log($scope.contatoSelecionado)
         $http({
             url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/${$scope.idContato}`,
             method: 'PUT',
@@ -150,14 +153,14 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
 
         }, function errorCallback(err) {
             console.error(err);
-            console.log($scope.contatoSelecionado)
+            
         })
     }
 
-    $scope.alteraEndereco = function () {
+    $scope.alteraEndereco = function () { //Testei tive algumas duvidas e nao realizei a operação
         console.log($scope.idEndereco)
         $http({
-            url: `https://www.selida.com.br/avaliacaotecnica/api/Pessoas/${$scope.idEndereco}`,
+            url: `https://www.selida.com.br/avaliacaotecnica/api/Endereco/${$scope.idEndereco}`,
             method: 'PUT',
             data: $scope.enderecoSelecionado,
             headers: {
@@ -215,11 +218,4 @@ crud.controller("controller", function ($scope, $http) { // scope ligação da v
         $scope.enderecos.splice($scope.enderecos.indexOf($scope.enderecoSelecionado), 1)
         $scope.novoEndereco = {}
     }
-
-
-    $scope.ordenarPor = function (campo) {
-        $scope.criterioDeOrdenacao = campo
-        $scope.direcao = !$scope.direcao
-    }
-
 })

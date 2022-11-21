@@ -16,7 +16,8 @@
     <div class="container">
         <div class="alinhamento">
             <h1>Listagem</h1>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalContato" ng-click="enderecos=[]">Criar Nova
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalContato"
+                ng-click="enderecos=[]">Criar Nova
                 Pessoa</button>
         </div>
         <table class="table">
@@ -113,7 +114,8 @@
                                 ng-model="novoEndereco.cidade">
 
                             <label class="control-label col-sm-1" for="uf">UF</label>
-                            <input class="col-md-3 col-lg-offset-2" type="text" id="uf" ng-required="true" ng-model="novoEndereco.uf">
+                            <input class="col-md-3 col-lg-offset-2" type="text" id="uf" ng-required="true"
+                                ng-model="novoEndereco.uf">
 
                         </div>
                         <button type="button" class="btn btn-primary btn-save" name="addEndereco"
@@ -166,8 +168,8 @@
                             ng-minlength="4" placeholder="Digite seu nome: " ng-model="contatoSelecionado.nome">
 
                         <label class="control-label col-sm-1 arrumandoIdade" for="idade">Idade</label>
-                        <input class="col-md-3 col-lg-offset-1" type="text" id="idade" ng-required="true"
-                            placeholder="Digite sua idade: " ng-model="contatoSelecionado.idade">
+                        <input class="col-md-3 col-lg-offset-1" type="number" id="idade" ng-required="true"
+                        ng-pattern="/^\d{2,3}$/"  placeholder="Digite sua idade: " ng-model="contatoSelecionado.idade">
 
                         <label class="control-label col-sm-1" for="email">Email</label>
                         <input class="col-md-3 col-lg-offset-2" type="email" id="email" ng-required="true"
@@ -195,23 +197,24 @@
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
                             <label class="control-label col-sm-1" for="logradouro">Logradouro</label>
-                            <input class="col-md-3 col-lg-offset-2" type="text" id="logradouro"  ng-required="true"
+                            <input class="col-md-3 col-lg-offset-2" type="text" id="logradouro" ng-required="true"
                                 ng-model="novoEndereco.logradouro">
 
                             <label class="control-label col-sm-1 arrumandoIdade" for="numero">Numero</label>
-                            <input class="col-md-3 col-lg-offset-1" type="text" id="numero"  ng-required="true"
+                            <input class="col-md-3 col-lg-offset-1" type="text" id="numero" ng-required="true"
                                 ng-model="novoEndereco.numero">
 
                             <label class="control-label col-sm-1" for="bairro">Bairro</label>
-                            <input class="col-md-3 col-lg-offset-2" type="text" id="bairro"  ng-required="true"
+                            <input class="col-md-3 col-lg-offset-2" type="text" id="bairro" ng-required="true"
                                 ng-model="novoEndereco.bairro">
 
                             <label class="control-label col-sm-1 dataNasc" for="cidade">Cidade</label>
-                            <input class="col-md-3 col-lg-offset-0 " type="text" id="cidade"  ng-required="true"
+                            <input class="col-md-3 col-lg-offset-0 " type="text" id="cidade" ng-required="true"
                                 ng-model="novoEndereco.cidade">
 
                             <label class="control-label col-sm-1" for="uf">UF</label>
-                            <input class="col-md-3 col-lg-offset-2" type="text" id="uf"  ng-required="true" ng-model="novoEndereco.uf">
+                            <input class="col-md-3 col-lg-offset-2" type="text" id="uf" ng-required="true"
+                                ng-model="novoEndereco.uf">
 
                         </div>
                         <button type="button" class="btn btn-primary btn-save" ng-disabled="enderecoForm.$invalid"
@@ -285,7 +288,7 @@
 
 <!-- Modoulos do Boostrap 3 -->
 
- <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
